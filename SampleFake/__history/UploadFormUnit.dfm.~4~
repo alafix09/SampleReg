@@ -1,0 +1,56 @@
+object UploadForm: TUploadForm
+  Left = 0
+  Top = 0
+  Caption = #1056#1091#1095#1085#1072#1103' '#1074#1099#1075#1088#1091#1079#1082#1072
+  ClientHeight = 89
+  ClientWidth = 505
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  DesignSize = (
+    505
+    89)
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 16
+    Top = 20
+    Width = 17
+    Height = 13
+    Caption = 'SID'
+  end
+  object OKButton: TButton
+    Left = 334
+    Top = 52
+    Width = 75
+    Height = 25
+    Anchors = [akRight, akBottom]
+    Caption = #1042#1099#1075#1088#1091#1079#1080#1090#1100
+    TabOrder = 0
+    OnClick = OKButtonClick
+  end
+  object CancelButton: TButton
+    Left = 422
+    Top = 52
+    Width = 75
+    Height = 25
+    Anchors = [akRight, akBottom]
+    Cancel = True
+    Caption = #1054#1090#1084#1077#1085#1072
+    ModalResult = 8
+    TabOrder = 1
+  end
+  object SIDEdit: TEdit
+    Left = 64
+    Top = 17
+    Width = 433
+    Height = 21
+    Anchors = [akLeft, akTop, akRight]
+    NumbersOnly = True
+    TabOrder = 2
+  end
+end

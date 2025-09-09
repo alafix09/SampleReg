@@ -1,0 +1,29 @@
+//---------------------------------------------------------------------------
+
+#ifndef PwdFormUnitH
+#define PwdFormUnitH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.Forms.hpp>
+//---------------------------------------------------------------------------
+class TPwdForm : public TForm
+{
+__published:	// IDE-managed Components
+	TButton *CancelButton;
+	TButton *OKButton;
+	TEdit *ÄùïøòEdit;
+	TEdit *Edit2;
+	TLabel *Label1;
+	TLabel *Label2;
+	void __fastcall OKButtonClick(TObject *Sender);
+	void __fastcall CancelButtonClick(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+	__fastcall TPwdForm(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TPwdForm *PwdForm;
+//---------------------------------------------------------------------------
+#endif

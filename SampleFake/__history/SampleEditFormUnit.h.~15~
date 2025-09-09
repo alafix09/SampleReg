@@ -1,0 +1,60 @@
+//---------------------------------------------------------------------------
+
+#ifndef SampleEditFormUnitH
+#define SampleEditFormUnitH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.Forms.hpp>
+#include <Data.DB.hpp>
+#include <FireDAC.Comp.Client.hpp>
+#include <FireDAC.Comp.DataSet.hpp>
+#include <FireDAC.DApt.hpp>
+#include <FireDAC.DApt.Intf.hpp>
+#include <FireDAC.DatS.hpp>
+#include <FireDAC.Phys.Intf.hpp>
+#include <FireDAC.Stan.Async.hpp>
+#include <FireDAC.Stan.Error.hpp>
+#include <FireDAC.Stan.Intf.hpp>
+#include <FireDAC.Stan.Option.hpp>
+#include <FireDAC.Stan.Param.hpp>
+#include <Vcl.DBCtrls.hpp>
+#include <Vcl.ExtCtrls.hpp>
+//---------------------------------------------------------------------------
+class TSampleEditForm : public TForm
+{
+__published:	// IDE-managed Components
+	TFDQuery *FDQuery;
+	TDataSource *DataSource;
+	TButton *CancelButton;
+	TButton *OKButton;
+	TDataSource *DataSourceMaterial;
+	TFDQuery *FDQueryMaterial;
+	TLabel *Label2;
+	TDBMemo *MemoDescript;
+	TDBLookupComboBox *CBMat;
+	TLabel *Label3;
+	TButton *CloseButton;
+	TDBRadioGroup *DBRadioGroup1;
+	void __fastcall OKButtonClick(TObject *Sender);
+	void __fastcall CancelButtonClick(TObject *Sender);
+	void __fastcall FDQueryAfterApplyUpdates(TFDDataSet *DataSet, int AErrors);
+	void __fastcall FDQueryAfterEdit(TDataSet *DataSet);
+	void __fastcall FormCloseQuery(TObject *Sender, bool &CanClose);
+	void __fastcall CloseButtonClick(TObject *Sender);
+private:	// User declarations
+	int id;
+	bool changed;
+	String initCaption;
+public:		// User declarations
+	__fastcall TSampleEditForm(TComponent* Owner);
+	bool setId(int id);
+	bool isChanged()
+	{   return changed; }
+	void setChanged(bool aChanged);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TSampleEditForm *SampleEditForm;
+//---------------------------------------------------------------------------
+#endif

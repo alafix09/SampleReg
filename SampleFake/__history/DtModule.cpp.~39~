@@ -1,0 +1,64 @@
+//---------------------------------------------------------------------------
+
+#include <fstream>
+#pragma hdrstop
+#include "PwdFormUnit.h"
+#include "DtModule.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma classgroup "Vcl.Controls.TControl"
+#pragma resource "*.dfm"
+TDataModule1 *DataModule1;
+//---------------------------------------------------------------------------
+
+std::string exportPath;
+
+
+__fastcall TDataModule1::TDataModule1(TComponent* Owner)
+	: TDataModule(Owner)
+{
+	TPwdForm *pwdForm;
+
+	std::string iniPath;
+
+    exportPath = "";
+
+
+	iniPath = AnsiString(ExtractFilePath(Application->ExeName)).c_str();
+	iniPath += "SampleFake.exp";
+
+	std::ifstream in;
+	in.open(iniPath);
+
+	if (in.is_open())
+	{
+		in >> exportPath;
+		in.close();
+	}
+	else
+	{
+		char buf[10240];
+		if (SHGetSpecialFolderPathA(0, buf, CSIDL_MYDOCUMENTS, FALSE))
+		{
+			exportPath = buf;
+		}
+	}
+
+	if (exportPath.length() > 0 && exportPath[exportPath.length() - 1] != '\\')
+	{
+        exportPath += '\\';
+    }
+
+
+
+	pwdForm = new TPwdForm(this);
+	if (pwdForm->ShowModal() != mrOk)
+	{
+		exit(0);
+	}
+
+
+
+
+}
+//---------------------------------------------------------------------------

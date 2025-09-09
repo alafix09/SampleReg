@@ -1,0 +1,46 @@
+object TruckEditForm: TTruckEditForm
+  Left = 0
+  Top = 0
+  Caption = 'TruckEditForm'
+  ClientHeight = 501
+  ClientWidth = 644
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 40
+    Top = 43
+    Width = 75
+    Height = 13
+    Caption = #1053#1086#1084#1077#1088#1085#1086#1081' '#1079#1085#1072#1082
+  end
+  object Label2: TLabel
+    Left = 40
+    Top = 77
+    Width = 54
+    Height = 13
+    Caption = #1047#1072#1084#1077#1095#1072#1085#1080#1077
+  end
+  object TID: TEdit
+    Left = 136
+    Top = 40
+    Width = 241
+    Height = 21
+    TabOrder = 0
+    Text = 'TID'
+  end
+  object FDQuery: TFDQuery
+    Left = 576
+    Top = 32
+  end
+  object DataSource: TDataSource
+    Left = 576
+    Top = 80
+  end
+end

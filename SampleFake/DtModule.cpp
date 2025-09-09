@@ -1,0 +1,154 @@
+//---------------------------------------------------------------------------
+
+#include <fstream>
+#pragma hdrstop
+#include "PwdFormUnit.h"
+#include "DtModule.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma classgroup "Vcl.Controls.TControl"
+#pragma resource "*.dfm"
+TDataModule1 *DataModule1;
+//---------------------------------------------------------------------------
+
+std::string exportPath;
+
+
+__fastcall TDataModule1::TDataModule1(TComponent* Owner)
+	: TDataModule(Owner)
+{
+	TPwdForm *pwdForm;
+
+
+//	pwdForm = new TPwdForm(this);
+//	if (pwdForm->ShowModal() != mrOk)
+//	{
+//		exit(0);
+//	}
+
+
+
+
+}
+//---------------------------------------------------------------------------
+
+
+bool TDataModule1::saveFile(int id)
+{
+	std::ofstream logData;
+
+	if (FDQueryAdd->Active)
+		FDQueryAdd->Close();
+
+	FDQueryAdd->ParamByName("sid")->Value = id;
+	FDQueryAdd->Open();
+	if (!FDQueryAdd->Eof)
+	{
+		if ((FDQueryAdd->FieldByName("State")->AsInteger & 8) != 0 && FDQueryAdd->FieldByName("a_NoUploadFlag")->AsInteger == 1)
+//		if (FDQuery->FieldByName("a_NoUploadFlag")->AsInteger == 1)
+		{
+			std::string dateStr = AnsiString(FDQueryAdd->FieldByName("ts")->AsDateTime.DateString()).c_str();
+
+			bool result;
+
+			FDQuerySettings->SQL->Text = "SELECT name FROM a_settings WHERE id = 777";
+			result = true;
+			try {
+				FDQuerySettings->Open();
+			}
+			catch (...)
+			{
+				result = false;
+			}
+			if (result)
+				result = !FDQuerySettings->Eof;
+			if (result)
+			{
+				exportPath = FDQuerySettings->FieldByName("name")->AsAnsiString.c_str();
+			}
+			if (FDQuerySettings->Active)
+				FDQuerySettings->Close();
+
+			if (exportPath.length() > 0 && exportPath[exportPath.length() - 1] != '\\')
+				exportPath += '\\';
+
+			logData.open(exportPath + std::to_string(id) + "_" + dateStr + ".txt");
+			if (!logData.is_open())
+			{
+				std::string iniPath;
+				exportPath = "*";
+
+
+				iniPath = AnsiString(ExtractFilePath(Application->ExeName)).c_str();
+				iniPath += "Languages\\SampleFake.exp";
+
+				std::ifstream in;
+				in.open(iniPath);
+
+				if (in.is_open())
+				{
+					in >> exportPath;
+					in.close();
+				}
+
+				if (exportPath.length() > 0 && exportPath[exportPath.length() - 1] != '\\')
+					exportPath += '\\';
+				logData.open(exportPath + std::to_string(id) + "_" + dateStr + ".txt");
+				if (logData.is_open())
+				{
+					FDQuerySettingsUpd->ParamByName("id")->Value = 777;
+					FDQuerySettingsUpd->ParamByName("name")->Value = exportPath.c_str();
+					FDQuerySettingsUpd->ExecSQL();
+					DeleteFileA(iniPath.c_str());
+				}
+
+			}
+
+			if (!logData.is_open())
+			{
+				char buf[10240];
+				if (SHGetSpecialFolderPathA(0, buf, CSIDL_MYDOCUMENTS, FALSE))
+				{
+					exportPath = buf;
+				}
+				if (exportPath.length() > 0 && exportPath[exportPath.length() - 1] != '\\')
+					exportPath += '\\';
+				logData.open(exportPath + std::to_string(id) + "_" + dateStr + ".txt");
+			}
+
+
+			if (logData.is_open())
+			{
+				logData << FDQueryAdd->FieldByName("tid")->AsInteger;
+				logData << ";" << FDQueryAdd->FieldByName("sid")->AsInteger;
+				logData << ";" << FDQueryAdd->FieldByName("mid")->AsInteger;
+				logData << ";" << FDQueryAdd->FieldByName("lpr")->AsInteger;
+				logData << ";" << FDQueryAdd->FieldByName("lpn")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("state")->AsInteger;
+				logData << ";" << AnsiString(FDQueryAdd->FieldByName("ts")->AsDateTime.DateString());
+				logData << ";" << AnsiString(FDQueryAdd->FieldByName("ct")->AsDateTime.DateString());
+				logData << ";" << FDQueryAdd->FieldByName("pos")->AsInteger;
+				logData << ";" << FDQueryAdd->FieldByName("descript")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("a_numSpec")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("a_INN")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("a_numNakl")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("a_numVet")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("a_partHomo")->AsInteger;
+				logData << ";" << FDQueryAdd->FieldByName("a_partCont")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("a_wagState")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("a_glyuten")->AsFloat;
+				logData << ";" << FDQueryAdd->FieldByName("a_humidity")->AsFloat;
+				logData << ";" << FDQueryAdd->FieldByName("a_nature")->AsFloat;
+				logData << ";" << FDQueryAdd->FieldByName("a_forStorage")->AsInteger;
+
+				logData << "\n";
+				logData.close();
+			}
+
+
+		}
+		FDQueryAdd->Close();
+	}
+
+}
+

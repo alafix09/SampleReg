@@ -1,0 +1,384 @@
+object TruckEditForm: TTruckEditForm
+  Left = 0
+  Top = 0
+  Caption = #1043#1088#1091#1079#1086#1074#1080#1082
+  ClientHeight = 455
+  ClientWidth = 783
+  Color = clBtnFace
+  Constraints.MinHeight = 490
+  Constraints.MinWidth = 750
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poDesktopCenter
+  OnCloseQuery = FormCloseQuery
+  DesignSize = (
+    783
+    455)
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 16
+    Top = 13
+    Width = 75
+    Height = 13
+    Caption = #1053#1086#1084#1077#1088#1085#1086#1081' '#1079#1085#1072#1082
+  end
+  object Label2: TLabel
+    Left = 16
+    Top = 47
+    Width = 54
+    Height = 13
+    Caption = #1047#1072#1084#1077#1095#1072#1085#1080#1077
+  end
+  object Label3: TLabel
+    Left = 406
+    Top = 13
+    Width = 61
+    Height = 13
+    Anchors = [akTop, akRight]
+    Caption = #1055#1088#1086#1080#1079#1074#1086#1076#1080#1090
+  end
+  object GroupBox3: TGroupBox
+    Left = 8
+    Top = 136
+    Width = 770
+    Height = 145
+    Anchors = [akLeft, akRight, akBottom]
+    Caption = ' '#1044#1086#1087#1086#1083#1085#1080#1090#1077#1083#1100#1085#1086' '
+    Color = clBtnFace
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 3
+    DesignSize = (
+      770
+      145)
+    object Label4: TLabel
+      Left = 9
+      Top = 80
+      Width = 107
+      Height = 13
+      Caption = #1053#1086#1084#1077#1088' '#1089#1087#1077#1094#1080#1092#1080#1082#1072#1094#1080#1080
+    end
+    object Label5: TLabel
+      Left = 9
+      Top = 53
+      Width = 89
+      Height = 13
+      Caption = #1053#1086#1084#1077#1088' '#1085#1072#1082#1083#1072#1076#1085#1086#1081
+    end
+    object Label6: TLabel
+      Left = 9
+      Top = 107
+      Width = 129
+      Height = 13
+      Caption = #1053#1086#1084#1077#1088' '#1074#1077#1090#1089#1074#1080#1076#1077#1090#1077#1083#1100#1089#1090#1074#1072
+    end
+    object Label7: TLabel
+      Left = 9
+      Top = 26
+      Width = 21
+      Height = 13
+      Caption = #1048#1053#1053
+    end
+    object EditNumSpec: TDBEdit
+      Left = 151
+      Top = 77
+      Width = 606
+      Height = 21
+      Anchors = [akLeft, akTop, akRight]
+      DataField = 'a_numSpec'
+      DataSource = DataSource
+      TabOrder = 2
+    end
+    object EditNumNakl: TDBEdit
+      Left = 151
+      Top = 50
+      Width = 606
+      Height = 21
+      Anchors = [akLeft, akTop, akRight]
+      DataField = 'a_numNakl'
+      DataSource = DataSource
+      TabOrder = 1
+    end
+    object EditNumVet: TDBEdit
+      Left = 151
+      Top = 104
+      Width = 606
+      Height = 21
+      Anchors = [akLeft, akTop, akRight]
+      DataField = 'a_numVet'
+      DataSource = DataSource
+      TabOrder = 3
+    end
+    object EditInn: TDBEdit
+      Left = 151
+      Top = 23
+      Width = 606
+      Height = 21
+      Anchors = [akLeft, akTop, akRight]
+      DataField = 'a_INN'
+      DataSource = DataSource
+      TabOrder = 0
+    end
+  end
+  object MemoDescript: TDBMemo
+    Left = 158
+    Top = 47
+    Width = 607
+    Height = 74
+    Anchors = [akLeft, akTop, akRight, akBottom]
+    DataField = 'Descript'
+    DataSource = DataSource
+    TabOrder = 2
+    OnKeyPress = MemoDescriptKeyPress
+  end
+  object EditLPN: TDBEdit
+    Left = 158
+    Top = 10
+    Width = 210
+    Height = 21
+    Anchors = [akLeft, akTop, akRight]
+    DataField = 'LPN'
+    DataSource = DataSource
+    TabOrder = 0
+  end
+  object OKButton: TButton
+    Left = 594
+    Top = 421
+    Width = 75
+    Height = 25
+    Anchors = [akRight, akBottom]
+    Caption = 'Ok'
+    TabOrder = 7
+    OnClick = OKButtonClick
+  end
+  object CancelButton: TButton
+    Left = 689
+    Top = 421
+    Width = 75
+    Height = 25
+    Anchors = [akRight, akBottom]
+    Cancel = True
+    Caption = #1054#1090#1084#1077#1085#1072
+    TabOrder = 6
+    OnClick = CancelButtonClick
+  end
+  object CBMat: TDBLookupComboBox
+    Left = 554
+    Top = 10
+    Width = 210
+    Height = 21
+    Anchors = [akTop, akRight]
+    DataField = 'MID'
+    DataSource = DataSource
+    KeyField = 'MID'
+    ListField = 'Name'
+    ListSource = DataSourceMaterial
+    TabOrder = 1
+  end
+  object GroupBox1: TGroupBox
+    Left = 396
+    Top = 287
+    Width = 382
+    Height = 123
+    Anchors = [akRight, akBottom]
+    Caption = ' '#1055#1086' '#1076#1072#1085#1085#1099#1084' '#1086#1090#1087#1088#1072#1074#1080#1090#1077#1083#1103
+    TabOrder = 5
+    object Label8: TLabel
+      Left = 11
+      Top = 26
+      Width = 61
+      Height = 13
+      Caption = #1050#1083#1077#1081#1082#1086#1074#1080#1085#1072
+    end
+    object Label9: TLabel
+      Left = 11
+      Top = 53
+      Width = 55
+      Height = 13
+      Caption = #1042#1083#1072#1078#1085#1086#1089#1090#1100
+    end
+    object Label10: TLabel
+      Left = 11
+      Top = 83
+      Width = 37
+      Height = 13
+      Caption = #1053#1072#1090#1091#1088#1072
+    end
+    object EditGlyuten: TDBEdit
+      Left = 159
+      Top = 20
+      Width = 210
+      Height = 21
+      DataField = 'a_glyuten'
+      DataSource = DataSource
+      TabOrder = 0
+    end
+    object EditHumidity: TDBEdit
+      Left = 159
+      Top = 50
+      Width = 210
+      Height = 21
+      DataField = 'a_humidity'
+      DataSource = DataSource
+      TabOrder = 1
+    end
+    object EditNature: TDBEdit
+      Left = 159
+      Top = 80
+      Width = 210
+      Height = 21
+      DataField = 'a_nature'
+      DataSource = DataSource
+      TabOrder = 2
+    end
+  end
+  object GroupBox2: TGroupBox
+    Left = 8
+    Top = 287
+    Width = 370
+    Height = 123
+    Anchors = [akLeft, akRight, akBottom]
+    Caption = ' '#1053#1072#1088#1091#1078#1085#1080#1081' '#1086#1089#1084#1086#1090#1088' '#1087#1072#1088#1090#1080#1080' '
+    Color = clBtnFace
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 4
+    DesignSize = (
+      370
+      123)
+    object Label11: TLabel
+      Left = 9
+      Top = 26
+      Width = 114
+      Height = 13
+      Caption = #1054#1076#1085#1086#1088#1086#1076#1085#1086#1089#1090#1100' '#1087#1072#1088#1090#1080#1080
+    end
+    object Label12: TLabel
+      Left = 9
+      Top = 53
+      Width = 112
+      Height = 13
+      Caption = #1047#1072#1088#1072#1078#1077#1085#1085#1086#1089#1090#1100' '#1087#1072#1088#1090#1080#1080
+    end
+    object Label13: TLabel
+      Left = 9
+      Top = 83
+      Width = 92
+      Height = 13
+      Caption = #1057#1086#1089#1090#1086#1103#1085#1080#1077' '#1074#1072#1075#1086#1085#1072
+    end
+    object EditPartCont: TDBEdit
+      Left = 151
+      Top = 50
+      Width = 210
+      Height = 21
+      Anchors = [akLeft, akTop, akRight]
+      DataField = 'a_partCont'
+      DataSource = DataSource
+      TabOrder = 0
+    end
+    object EditWagState: TDBEdit
+      Left = 151
+      Top = 80
+      Width = 210
+      Height = 21
+      Anchors = [akLeft, akTop, akRight]
+      DataField = 'a_wagState'
+      DataSource = DataSource
+      TabOrder = 1
+    end
+  end
+  object DBComboBox1: TDBComboBox
+    Left = 159
+    Top = 307
+    Width = 209
+    Height = 21
+    Style = csDropDownList
+    Anchors = [akLeft, akTop, akRight]
+    DataField = 'a_partHomo'
+    DataSource = DataSource
+    Items.Strings = (
+      #1086#1076#1085#1086#1088#1086#1076#1085#1072#1103
+      #1085#1077#1086#1076#1085#1086#1088#1086#1076#1085#1072#1103)
+    TabOrder = 8
+  end
+  object FDQuery: TFDQuery
+    Active = True
+    AfterEdit = FDQueryAfterEdit
+    CachedUpdates = True
+    AfterApplyUpdates = FDQueryAfterApplyUpdates
+    Connection = DataModule1.FDConnection
+    SQL.Strings = (
+      'select * from trucks where tid = :tid')
+    Left = 295
+    Top = 57
+    ParamData = <
+      item
+        Name = 'TID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 0
+      end>
+  end
+  object DataSource: TDataSource
+    DataSet = FDQuery
+    Left = 431
+    Top = 57
+  end
+  object DataSourceMaterial: TDataSource
+    AutoEdit = False
+    DataSet = FDQueryMaterial
+    Left = 30
+    Top = 412
+  end
+  object FDQueryMaterial: TFDQuery
+    CachedUpdates = True
+    Connection = DataModule1.FDConnection
+    FetchOptions.AssignedValues = [evCache]
+    FetchOptions.Cache = [fiBlobs, fiMeta]
+    SQL.Strings = (
+      'select * from a_materials')
+    Left = 135
+    Top = 412
+  end
+  object FDQueryId: TFDQuery
+    CachedUpdates = True
+    Connection = DataModule1.FDConnection
+    FetchOptions.AssignedValues = [evCache]
+    FetchOptions.Cache = [fiBlobs, fiMeta]
+    SQL.Strings = (
+      'select vParam from config where cParam = '#39'NextTID'#39';')
+    Left = 243
+    Top = 412
+  end
+  object FDCommandId: TFDCommand
+    Connection = DataModule1.FDConnection
+    CommandText.Strings = (
+      'update config set vParam = :curId where cParam = '#39'W4PosTID'#39';'
+      'update config set vParam = :curId + 1 where cParam = '#39'NextTID'#39';')
+    ParamData = <
+      item
+        Name = 'CURID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = 45254
+      end>
+    Left = 312
+    Top = 413
+  end
+end

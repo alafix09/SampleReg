@@ -1,0 +1,279 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#include <fstream>
+#include <Sysutils.hpp>
+#pragma hdrstop
+
+#include "DtModule.h"
+#include "SampleEditFormUnit.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TSampleEditForm *SampleEditForm;
+//---------------------------------------------------------------------------
+__fastcall TSampleEditForm::TSampleEditForm(TComponent* Owner)
+	: TForm(Owner)
+{
+	if (FDQuery->Active)
+		FDQuery->Close();
+	FDQueryMaterial->Open();
+	id = -1;
+}
+//---------------------------------------------------------------------------
+bool TSampleEditForm::setId(int id)
+{
+	if (FDQuery->Active)
+		FDQuery->Close();
+
+	if (id >= 0)
+	{
+		FDQuery->ParamByName("sid")->Value = id;
+	}
+
+	FDQuery->Open();
+
+	if (id < 0)
+	{
+		FDQuery->Append();
+		FDQuery->FieldByName("SID")->AsInteger = id;
+		FDQuery->FieldByName("User")->NewValue = "user";
+		FDQuery->FieldByName("CT")->NewValue = Now();
+		FDQuery->FieldByName("TS")->NewValue = Now();
+		FDQuery->FieldByName("LPR")->NewValue = 2;
+		FDQuery->FieldByName("MID")->NewValue = 1;
+		FDQuery->FieldByName("State")->NewValue = 7;
+
+		CBMat->Enabled = true;
+		initCaption = "Образец (новый)";
+		setChanged(true);
+	}
+	else
+	{
+		CBMat->Enabled = false;
+		initCaption = String("Образец (") + id + ")";
+		setChanged(false);
+	}
+
+	if ((FDQuery->FieldByName("State")->AsInteger & 8) == 0)
+	{
+//		CBNoUpload->Enabled = true;
+		RGUpload->Enabled = true;
+		CloseButton->Enabled = true;
+	}
+	else
+	{
+ //		CBNoUpload->Enabled = false;
+		RGUpload->Enabled = (FDQuery->FieldByName("a_NoUploadFlag")->AsInteger == 0);
+		CloseButton->Enabled = false;
+	}
+
+
+
+	return true;
+
+}
+void __fastcall TSampleEditForm::OKButtonClick(TObject *Sender)
+{
+	FDQuery->ApplyUpdates(-1);
+	ModalResult = mrOk;
+}
+//---------------------------------------------------------------------------
+void __fastcall TSampleEditForm::CancelButtonClick(TObject *Sender)
+{
+	ModalResult = mrCancel;
+}
+//---------------------------------------------------------------------------
+
+void TSampleEditForm::setChanged(bool aChanged)
+{
+	changed = aChanged;
+	if (changed)
+	{
+		Caption = "*" + initCaption;
+	}
+	else
+	{
+		Caption = initCaption;
+	}
+}
+
+extern std::string exportPath;
+
+void __fastcall TSampleEditForm::FDQueryAfterApplyUpdates(TFDDataSet *DataSet, int AErrors)
+
+{
+	int id;
+
+	id = FDQuery->FieldByName("SID")->AsInteger;
+	std::ofstream logData;
+
+	if (FDQueryAdd->Active)
+		FDQueryAdd->Close();
+
+	FDQueryAdd->ParamByName("sid")->Value = id;
+	FDQueryAdd->Open();
+	if (!FDQueryAdd->Eof)
+	{
+		if ((FDQueryAdd->FieldByName("State")->AsInteger & 8) != 0 && FDQuery->FieldByName("a_NoUploadFlag")->AsInteger == 1)
+//		if (FDQuery->FieldByName("a_NoUploadFlag")->AsInteger == 1)
+		{
+			std::string dateStr = AnsiString(FDQueryAdd->FieldByName("ts")->AsDateTime.DateString()).c_str();
+
+			bool result;
+
+			FDQuerySettings->SQL->Text = "SELECT name FROM a_settings WHERE id = 777";
+			result = true;
+			try {
+				FDQuerySettings->Open();
+			}
+			catch (...)
+			{
+				result = false;
+			}
+			if (result)
+				result = !FDQuerySettings->Eof;
+			if (result)
+			{
+				exportPath = FDQuerySettings->FieldByName("name")->AsAnsiString.c_str();
+			}
+			if (FDQuerySettings->Active)
+				FDQuerySettings->Close();
+
+			if (exportPath.length() > 0 && exportPath[exportPath.length() - 1] != '\\')
+				exportPath += '\\';
+
+			logData.open(exportPath + std::to_string(id) + "_" + dateStr + ".txt");
+			if (!logData.is_open())
+			{
+				std::string iniPath;
+				exportPath = "*";
+
+
+				iniPath = AnsiString(ExtractFilePath(Application->ExeName)).c_str();
+				iniPath += "Languages\\SampleFake.exp";
+
+				std::ifstream in;
+				in.open(iniPath);
+
+				if (in.is_open())
+				{
+					in >> exportPath;
+					in.close();
+				}
+
+				if (exportPath.length() > 0 && exportPath[exportPath.length() - 1] != '\\')
+					exportPath += '\\';
+				logData.open(exportPath + std::to_string(id) + "_" + dateStr + ".txt");
+				if (logData.is_open())
+				{
+					FDQuerySettingsUpd->ParamByName("id")->Value = 777;
+					FDQuerySettingsUpd->ParamByName("name")->Value = exportPath.c_str();
+					FDQuerySettingsUpd->ExecSQL();
+					DeleteFileA(iniPath.c_str());
+				}
+
+			}
+
+			if (!logData.is_open())
+			{
+				char buf[10240];
+				if (SHGetSpecialFolderPathA(0, buf, CSIDL_MYDOCUMENTS, FALSE))
+				{
+					exportPath = buf;
+				}
+				if (exportPath.length() > 0 && exportPath[exportPath.length() - 1] != '\\')
+					exportPath += '\\';
+				logData.open(exportPath + std::to_string(id) + "_" + dateStr + ".txt");
+			}
+
+
+			if (logData.is_open())
+			{
+				logData << FDQueryAdd->FieldByName("tid")->AsInteger;
+				logData << ";" << FDQueryAdd->FieldByName("sid")->AsInteger;
+				logData << ";" << FDQueryAdd->FieldByName("mid")->AsInteger;
+				logData << ";" << FDQueryAdd->FieldByName("lpr")->AsInteger;
+				logData << ";" << FDQueryAdd->FieldByName("lpn")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("state")->AsInteger;
+				logData << ";" << AnsiString(FDQueryAdd->FieldByName("ts")->AsDateTime.DateString());
+				logData << ";" << AnsiString(FDQueryAdd->FieldByName("ct")->AsDateTime.DateString());
+				logData << ";" << FDQueryAdd->FieldByName("pos")->AsInteger;
+				logData << ";" << FDQueryAdd->FieldByName("descript")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("a_numSpec")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("a_INN")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("a_numNakl")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("a_numVet")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("a_partHomo")->AsInteger;
+				logData << ";" << FDQueryAdd->FieldByName("a_partCont")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("a_wagState")->AsAnsiString;
+				logData << ";" << FDQueryAdd->FieldByName("a_glyuten")->AsFloat;
+				logData << ";" << FDQueryAdd->FieldByName("a_humidity")->AsFloat;
+				logData << ";" << FDQueryAdd->FieldByName("a_nature")->AsFloat;
+
+				logData << "\n";
+				logData.close();
+			}
+
+
+		}
+		FDQueryAdd->Close();
+	}
+//    FDQuery->FieldByName("SID")->AsT;
+	setChanged(false);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TSampleEditForm::FDQueryAfterEdit(TDataSet *DataSet)
+{
+	setChanged(true);
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TSampleEditForm::FormCloseQuery(TObject *Sender, bool &CanClose)
+{
+	if (isChanged())
+	{
+		if (MessageDlg("Данные изменены. Вы действительно хотите выйти?", mtConfirmation, TMsgDlgButtons() << mbYes << mbNo,0) == mrYes)
+		{
+			FDQuery->CancelUpdates();
+			setChanged(false);
+			CanClose = true;
+		}
+		else
+		{
+			CanClose = false;
+		}
+	}
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TSampleEditForm::CloseButtonClick(TObject *Sender)
+{
+	if (MessageDlg("Вы действительно хотите закрыть образец для изменения?", mtConfirmation, TMsgDlgButtons() << mbYes << mbNo,0) == mrYes)
+	{
+		int val = FDQuery->FieldByName("State")->AsInteger;
+		if (FDQuery->State != dsEdit && FDQuery->State != dsInsert)
+			FDQuery->Edit();
+		FDQuery->FieldByName("State")->AsInteger = (val | 8);
+		FDQuery->ApplyUpdates(-1);
+		ModalResult = mrOk;
+	}
+}
+//---------------------------------------------------------------------------
+
+
+
+void __fastcall TSampleEditForm::MemoDescriptKeyPress(TObject *Sender, System::WideChar &Key)
+
+{
+	if (Key == 27)
+	{
+		ModalResult = mrCancel;
+		Key = 0;
+	}
+}
+//---------------------------------------------------------------------------
+
+

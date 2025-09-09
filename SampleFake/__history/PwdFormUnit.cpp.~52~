@@ -1,0 +1,99 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "PwdFormUnit.h"
+#include "TrucksFormUnit.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TPwdForm *PwdForm;
+extern TTrucksForm *TrucksForm;
+//---------------------------------------------------------------------------
+__fastcall TPwdForm::TPwdForm(TComponent* Owner)
+	: TForm(Owner)
+{
+}
+//---------------------------------------------------------------------------
+void __fastcall TPwdForm::OKButtonClick(TObject *Sender)
+{
+	if (FDQuery->Active)
+		FDQuery->Close();
+	FDQuery->ParamByName("user")->Value = LoginEdit->Text;
+	FDQuery->ParamByName("pwd")->Value = PwdEdit->Text;
+	FDQuery->Open();
+	if (FDQuery->Eof)
+	{
+		MessageDlg("Неверное имя пользователя или пароль!",
+			mtError, TMsgDlgButtons() << mbOK, 0);
+	}
+	else
+	{
+		FDQuery->SQL->Text = "CREATE TABLE a_settings (id INTEGER NOT NULL, name VARCHAR(128), PRIMARY KEY (id))";
+		bool result;
+		result = true;
+		try {
+			FDQuery->ExecSQL();
+		}
+		catch (...)
+		{
+			result = false;
+		}
+
+
+		result = true;
+		FDQuery->SQL->Text = "INSERT INTO a_settings (id, name) VALUES (777, '\\\\\\\\becon\\\\dfs\\\\ObmenLab\\\\SRZherdCh0922')";
+		try {
+			FDQuery->ExecSQL();
+		}
+		catch (...)
+		{
+			result = false;
+		}
+
+
+//		TrucksForm->Show();
+//		Hide();
+	}
+	if (FDQuery->Active)
+		FDQuery->Close();
+}
+//---------------------------------------------------------------------------
+void __fastcall TPwdForm::CancelButtonClick(TObject *Sender)
+{
+	ModalResult = mrCancel;
+//    exit(255);
+}
+//---------------------------------------------------------------------------
+void __fastcall TPwdForm::FormCreate(TObject *Sender)
+{
+/*
+	Left = (Screen.WorkAreaWidth - Width) / 2;
+	Top = (Screen.WorkAreaHeight - Height) / 2;
+	*/
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TPwdForm::LoginEditKeyPress(TObject *Sender, System::WideChar &Key)
+
+{
+	if (Key == 13)
+	{
+        Key = 0;
+		PwdEdit->SetFocus();
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TPwdForm::PwdEditKeyPress(TObject *Sender, System::WideChar &Key)
+
+{
+	if (Key == 13)
+	{
+        Key = 0;
+		OKButtonClick(Sender);
+    }
+}
+//---------------------------------------------------------------------------
+

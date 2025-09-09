@@ -1,0 +1,73 @@
+object DataModule1: TDataModule1
+  OldCreateOrder = False
+  Height = 274
+  Width = 497
+  object FDConnection: TFDConnection
+    Params.Strings = (
+      'User_Name=zroot'
+      'Database=samplereg'
+      'Password=47964796'
+      'CharacterSet=utf8'
+      'DriverID=MySQL')
+    Connected = True
+    Left = 88
+    Top = 24
+  end
+  object FDQueryAdd: TFDQuery
+    CachedUpdates = True
+    Connection = FDConnection
+    SQL.Strings = (
+      'select '
+      '  tid, samples.sid, samples.mid, lpr, lpn, a_noUploadFlag'
+      
+        ', samples.state, samples.ts, samples.ct, trucks.pos, samples.des' +
+        'cript'
+      
+        ', a_numSpec, a_INN, a_numNakl, a_numVet, case when a_partHomo = ' +
+        '"'#1085#1077#1086#1076#1085#1086#1088#1086#1076#1085#1072#1103'" then 2 else 1 end a_partHomo'
+      
+        ', a_partCont, a_wagState, a_glyuten, a_humidity, a_nature, a_for' +
+        'Storage'
+      
+        'from samples left join trucks on trucks.sid = samples.sid where ' +
+        'samples.sid = :sid;')
+    Left = 47
+    Top = 97
+    ParamData = <
+      item
+        Name = 'SID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end>
+  end
+  object FDQuerySettings: TFDQuery
+    CachedUpdates = True
+    Connection = FDConnection
+    SQL.Strings = (
+      'update')
+    Left = 47
+    Top = 145
+  end
+  object FDQuerySettingsUpd: TFDQuery
+    CachedUpdates = True
+    Connection = FDConnection
+    SQL.Strings = (
+      'REPLACE INTO a_settings (id, name) VALUES (:id, :name)')
+    Left = 47
+    Top = 193
+    ParamData = <
+      item
+        Name = 'ID'
+        DataType = ftInteger
+        ParamType = ptInput
+        Value = Null
+      end
+      item
+        Name = 'NAME'
+        DataType = ftString
+        ParamType = ptInput
+        Value = Null
+      end>
+  end
+end

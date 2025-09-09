@@ -1,0 +1,42 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "DtModule.h"
+#include "TruckEdirFormUnit.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TTruckEditForm *TruckEditForm;
+//---------------------------------------------------------------------------
+__fastcall TTruckEditForm::TTruckEditForm(TComponent* Owner)
+	: TForm(Owner)
+{
+	id = -1;
+	setId(-1);
+}
+//---------------------------------------------------------------------------
+
+
+bool TTruckEditForm::setId(int id)
+{
+	if (FDQuery->Active)
+		FDQuery->Close();
+	FDQuery->ParamByName("tid")->Value = id;
+	FDQuery->Open();
+	return true;
+}
+
+void __fastcall TTruckEditForm::OKButtonClick(TObject *Sender)
+{
+	FDQuery->ApplyUpdates(-1);
+	ModalResult = mrOk;
+//	Close();
+}
+//---------------------------------------------------------------------------
+void __fastcall TTruckEditForm::CancelButtonClick(TObject *Sender)
+{
+	ModalResult = mrCancel;
+}
+//---------------------------------------------------------------------------

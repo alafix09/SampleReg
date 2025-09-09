@@ -1,0 +1,142 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 508
+  ClientWidth = 826
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 672
+    Top = 448
+    Width = 31
+    Height = 13
+    Caption = 'Label1'
+  end
+  object DBEdit1: TDBEdit
+    Left = 560
+    Top = 288
+    Width = 121
+    Height = 21
+    DataField = 'LPN'
+    DataSource = DataSource1
+    TabOrder = 0
+  end
+  object DBGrid1: TDBGrid
+    Left = 8
+    Top = 8
+    Width = 537
+    Height = 481
+    DataSource = DataSource1
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    ReadOnly = True
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnCellClick = DBGrid1CellClick
+    OnDblClick = DBGrid1DblClick
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'TID'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'LPN'
+        Title.Caption = #1053#1086#1084#1077#1088#1085#1086#1081' '#1079#1085#1072#1082
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'LPR'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'matname'
+        Title.Caption = #1055#1088#1086#1080#1079#1074#1086#1076#1080#1090
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'State'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Descript'
+        Title.Caption = #1047#1072#1084#1077#1095#1072#1085#1080#1103
+        Width = 220
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TS'
+        Title.Caption = #1048#1079#1084#1077#1085#1077#1085#1086
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'CT'
+        Title.Caption = #1057#1086#1079#1076#1072#1085#1086
+        Visible = True
+      end>
+  end
+  object Button1: TButton
+    Left = 592
+    Top = 208
+    Width = 75
+    Height = 25
+    Caption = 'Button1'
+    TabOrder = 2
+    OnClick = Button1Click
+  end
+  object FDMemTable1: TFDMemTable
+    MasterSource = DataSource1
+    MasterFields = 'TID'
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
+    Left = 736
+    Top = 368
+  end
+  object FDQuery1: TFDQuery
+    Active = True
+    AfterPost = FDQuery1AfterPost
+    CachedUpdates = True
+    Connection = DataModule1.FDConnection
+    SQL.Strings = (
+      'select t.*, m.name as matname from trucks t'
+      'left join a_materials m on m.mid = t.mid'
+      'order by t.tid desc limit 5')
+    Left = 592
+    Top = 48
+  end
+  object DataSource1: TDataSource
+    DataSet = FDQuery1
+    Left = 592
+    Top = 120
+  end
+  object Timer: TTimer
+    Enabled = False
+    Interval = 100
+    OnTimer = TimerTimer
+    Left = 736
+    Top = 8
+  end
+end

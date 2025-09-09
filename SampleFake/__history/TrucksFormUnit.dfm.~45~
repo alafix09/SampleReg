@@ -1,0 +1,296 @@
+object TrucksForm: TTrucksForm
+  Left = 0
+  Top = 0
+  Caption = 'TrucksForm'
+  ClientHeight = 568
+  ClientWidth = 1165
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  WindowState = wsMaximized
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  DesignSize = (
+    1165
+    568)
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 236
+    Top = 20
+    Width = 12
+    Height = 13
+    Caption = #1087#1086
+  end
+  object Label2: TLabel
+    Left = 14
+    Top = 20
+    Width = 7
+    Height = 13
+    Caption = #1057
+  end
+  object DBGrid1: TDBGrid
+    Left = 8
+    Top = 88
+    Width = 561
+    Height = 456
+    Anchors = [akLeft, akTop, akBottom]
+    DataSource = DataSource1
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    ReadOnly = True
+    TabOrder = 2
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnCellClick = DBGrid1CellClick
+    OnDblClick = DBGrid1DblClick
+    OnKeyPress = DBGrid1KeyPress
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'TID'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'LPN'
+        Title.Caption = #1053#1086#1084#1077#1088'. '#1079#1085#1072#1082
+        Width = 81
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'matname'
+        Title.Caption = #1055#1088#1086#1080#1079#1074#1086#1076#1080#1090
+        Width = 70
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'State'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Descript'
+        Title.Caption = #1047#1072#1084#1077#1095#1072#1085#1080#1103
+        Width = 160
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TS'
+        Title.Caption = #1048#1079#1084#1077#1085#1077#1085#1086
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'CT'
+        Title.Caption = #1057#1086#1079#1076#1072#1085#1086
+        Visible = True
+      end>
+  end
+  object FromDateTimePicker: TDateTimePicker
+    Left = 32
+    Top = 16
+    Width = 186
+    Height = 21
+    Date = 44751.000000000000000000
+    Time = 0.774724039350985500
+    TabOrder = 0
+    OnChange = ByDateTimePickerChange
+  end
+  object ByDateTimePicker: TDateTimePicker
+    Left = 263
+    Top = 16
+    Width = 186
+    Height = 21
+    Date = 44751.000000000000000000
+    Time = 0.774724039350985500
+    TabOrder = 1
+    OnChange = ByDateTimePickerChange
+  end
+  object DBGrid2: TDBGrid
+    Left = 575
+    Top = 88
+    Width = 581
+    Height = 457
+    Anchors = [akLeft, akTop, akBottom]
+    DataSource = DataSource2
+    Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgRowSelect, dgConfirmDelete, dgCancelOnExit, dgTitleClick, dgTitleHotTrack]
+    ReadOnly = True
+    TabOrder = 3
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    OnCellClick = DBGrid2CellClick
+    OnDblClick = DBGrid2DblClick
+    OnKeyPress = DBGrid2KeyPress
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'SID'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'a_TID'
+        Title.Caption = 'TID'
+        Width = 62
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'a_LPN'
+        Title.Caption = #1053#1086#1084#1077#1088'. '#1079#1085#1072#1082
+        Width = 72
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'matname'
+        Title.Caption = #1055#1088#1086#1080#1079#1074#1086#1076#1080#1090
+        Width = 81
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'Descript'
+        Title.Caption = #1047#1072#1084#1077#1095#1072#1085#1080#1103
+        Width = 213
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'TS'
+        Title.Caption = #1048#1079#1084#1077#1085#1077#1085#1086
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'CT'
+        Title.Caption = #1057#1086#1079#1076#1072#1085#1086
+        Visible = True
+      end>
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 549
+    Width = 1165
+    Height = 19
+    Panels = <>
+  end
+  object Button1: TButton
+    Left = 8
+    Top = 57
+    Width = 121
+    Height = 25
+    Caption = #1053#1086#1074#1099#1081' '#1075#1088#1091#1079#1086#1074#1080#1082
+    TabOrder = 5
+    OnClick = Button1Click
+  end
+  object FDQuery1: TFDQuery
+    AfterPost = FDQuery1AfterPost
+    CachedUpdates = True
+    Connection = DataModule1.FDConnection
+    SQL.Strings = (
+      'select t.*, m.name as matname from trucks t'
+      'left join a_materials m on m.mid = t.mid'
+      'where t.ct >= :DateFrom and t.ct <= :DateBy'
+      '')
+    Left = 96
+    Top = 296
+    ParamData = <
+      item
+        Name = 'DATEFROM'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = 41087d
+      end
+      item
+        Name = 'DATEBY'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = 41087d
+      end>
+  end
+  object DataSource1: TDataSource
+    AutoEdit = False
+    DataSet = FDQuery1
+    Left = 168
+    Top = 296
+  end
+  object ClickTimer1: TTimer
+    Enabled = False
+    Interval = 350
+    OnTimer = ClickTimer1Timer
+    Left = 32
+    Top = 296
+  end
+  object FDQuery2: TFDQuery
+    AfterPost = FDQuery1AfterPost
+    CachedUpdates = True
+    Connection = DataModule1.FDConnection
+    UpdateOptions.AssignedValues = [uvEDelete, uvEInsert, uvEUpdate]
+    UpdateOptions.EnableDelete = False
+    UpdateOptions.EnableInsert = False
+    UpdateOptions.EnableUpdate = False
+    SQL.Strings = (
+      'select s.*, m.name as matname,  '
+      
+        'CAST(CASE WHEN s.State & 8 > 0 THEN CASE WHEN s.a_noUploadFlag =' +
+        ' 2 THEN t.TID ELSE NULL END ELSE NULL END AS CHAR(50)) a_TID,'
+      
+        'CAST(CASE WHEN s.State  & 8 > 0 THEN CASE WHEN s.a_noUploadFlag ' +
+        '= 2 THEN t.LPN ELSE NULL END ELSE NULL END AS CHAR(50)) a_LPN'
+      'from samples s'
+      'left join a_materials m on m.mid = s.mid'
+      'left join trucks t on t.sid = s.sid'
+      'where s.ct >= :DateFrom and s.ct < :DateBy'
+      'and (s.a_noUploadFlag in (0, 2) or s.State & 8 = 0)'
+      'order by s.ct')
+    Left = 712
+    Top = 304
+    ParamData = <
+      item
+        Name = 'DATEFROM'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = 41087d
+      end
+      item
+        Name = 'DATEBY'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = 41087d
+      end>
+  end
+  object DataSource2: TDataSource
+    AutoEdit = False
+    DataSet = FDQuery2
+    Left = 768
+    Top = 304
+  end
+  object ClickTimer2: TTimer
+    Enabled = False
+    Interval = 350
+    OnTimer = ClickTimer2Timer
+    Left = 648
+    Top = 304
+  end
+  object RefreshTimer: TTimer
+    Interval = 5000
+    OnTimer = RefreshTimerTimer
+    Left = 680
+    Top = 32
+  end
+end

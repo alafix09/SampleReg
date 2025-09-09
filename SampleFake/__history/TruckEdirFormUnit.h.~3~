@@ -1,0 +1,24 @@
+//---------------------------------------------------------------------------
+
+#ifndef TruckEdirFormUnitH
+#define TruckEdirFormUnitH
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.Forms.hpp>
+//---------------------------------------------------------------------------
+class TTruckEditForm : public TForm
+{
+__published:	// IDE-managed Components
+	TEdit *TID;
+	TLabel *Label1;
+	TLabel *Label2;
+private:	// User declarations
+public:		// User declarations
+	__fastcall TTruckEditForm(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TTruckEditForm *TruckEditForm;
+//---------------------------------------------------------------------------
+#endif
