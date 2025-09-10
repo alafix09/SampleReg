@@ -10,13 +10,11 @@ object PwdForm: TPwdForm
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   Position = poDesktopCenter
   OnCreate = FormCreate
   DesignSize = (
     442
     107)
-  PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
     Left = 8
@@ -33,7 +31,7 @@ object PwdForm: TPwdForm
     Caption = #1055#1072#1088#1086#1083#1100
   end
   object CancelButton: TButton
-    Left = 359
+    Left = 357
     Top = 69
     Width = 75
     Height = 25
@@ -46,7 +44,7 @@ object PwdForm: TPwdForm
     ExplicitTop = 71
   end
   object OKButton: TButton
-    Left = 266
+    Left = 264
     Top = 69
     Width = 75
     Height = 25
@@ -60,16 +58,17 @@ object PwdForm: TPwdForm
   object LoginEdit: TEdit
     Left = 120
     Top = 8
-    Width = 314
+    Width = 312
     Height = 21
     Anchors = [akLeft, akTop, akRight]
     TabOrder = 0
     OnKeyPress = LoginEditKeyPress
+    ExplicitWidth = 314
   end
   object PwdEdit: TEdit
     Left = 120
     Top = 37
-    Width = 314
+    Width = 312
     Height = 21
     Anchors = [akLeft, akTop, akRight]
     PasswordChar = '*'

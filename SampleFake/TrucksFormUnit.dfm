@@ -10,7 +10,6 @@ object TrucksForm: TTrucksForm
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
-  OldCreateOrder = False
   WindowState = wsMaximized
   OnClose = FormClose
   OnResize = FormResize
@@ -18,7 +17,6 @@ object TrucksForm: TTrucksForm
   DesignSize = (
     1165
     568)
-  PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
     Left = 236
@@ -188,6 +186,8 @@ object TrucksForm: TTrucksForm
     Width = 1165
     Height = 19
     Panels = <>
+    ExplicitTop = 541
+    ExplicitWidth = 1163
   end
   object Button1: TButton
     Left = 8

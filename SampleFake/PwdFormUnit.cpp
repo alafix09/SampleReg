@@ -114,6 +114,7 @@ void __fastcall TPwdForm::CancelButtonClick(TObject *Sender)
 //---------------------------------------------------------------------------
 void __fastcall TPwdForm::FormCreate(TObject *Sender)
 {
+
 /*
 	Left = (Screen.WorkAreaWidth - Width) / 2;
 	Top = (Screen.WorkAreaHeight - Height) / 2;

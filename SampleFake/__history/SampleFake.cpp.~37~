@@ -1,0 +1,68 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+#include <tchar.h>
+//---------------------------------------------------------------------------
+USEFORM("TruckEditFormUnit.cpp", TruckEditForm);
+USEFORM("TrucksFormUnit.cpp", TrucksForm);
+USEFORM("DtModule.cpp", DataModule1); /* TDataModule: File Type */
+USEFORM("PwdFormUnit.cpp", PwdForm);
+USEFORM("SampleEditFormUnit.cpp", SampleEditForm);
+USEFORM("UploadFormUnit.cpp", UploadForm);
+//---------------------------------------------------------------------------
+#include "PwdFormUnit.h"
+
+
+#define MAX_LIC_YEAR	2025
+#define MAX_LIC_MONTH   11
+#define MAX_LIC_DAY     30
+
+#define MIN_LIC_YEAR	2025
+#define MIN_LIC_MONTH   9
+#define MIN_LIC_DAY     1
+
+int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
+{
+	try
+	{
+		Application->Initialize();
+
+		TDateTime dt = Date();
+		unsigned short y, m, d;
+		bool isLicense;
+		dt.DecodeDate(&y, &m, &d);
+		isLicense = (y > MAX_LIC_YEAR || (y == MAX_LIC_YEAR && (m > MAX_LIC_MONTH || (m == MAX_LIC_MONTH && d > MAX_LIC_DAY))));
+;       if (isLicense)
+			isLicense = (y < MIN_LIC_YEAR || (y == MIN_LIC_YEAR && (m < MIN_LIC_MONTH || (m == MIN_LIC_MONTH && d < MIN_LIC_DAY))));
+
+		if (!isLicense)
+		{
+			MessageDlg("Отсутствует лицензия на использование программного продукта",
+				mtError, TMsgDlgButtons() << mbOK, 0);
+			exit(0);
+		}
+
+
+		Application->CreateForm(__classid(TDataModule1), &DataModule1);
+		Application->CreateForm(__classid(TTrucksForm), &TrucksForm);
+		Application->Run();
+	}
+	catch (Exception &exception)
+	{
+		Application->ShowException(&exception);
+	}
+	catch (...)
+	{
+		try
+		{
+			throw Exception("");
+		}
+		catch (Exception &exception)
+		{
+			Application->ShowException(&exception);
+		}
+	}
+	return 0;
+}
+//---------------------------------------------------------------------------

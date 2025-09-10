@@ -14,13 +14,34 @@ USEFORM("UploadFormUnit.cpp", UploadForm);
 #include "PwdFormUnit.h"
 
 
+#define MAX_LIC_YEAR	2025
+#define MAX_LIC_MONTH   11
+#define MAX_LIC_DAY     30
+
+#define MIN_LIC_YEAR	2025
+#define MIN_LIC_MONTH   9
+#define MIN_LIC_DAY     1
+
 int WINAPI _tWinMain(HINSTANCE, HINSTANCE, LPTSTR, int)
 {
 	try
 	{
 		Application->Initialize();
 
+		TDateTime dt = Date();
+		unsigned short y, m, d;
+		bool noLicense;
+		dt.DecodeDate(&y, &m, &d);
+		noLicense = (y > MAX_LIC_YEAR || (y == MAX_LIC_YEAR && (m > MAX_LIC_MONTH || (m == MAX_LIC_MONTH && d > MAX_LIC_DAY))));
+;       if (!noLicense)
+			noLicense = (y < MIN_LIC_YEAR || (y == MIN_LIC_YEAR && (m < MIN_LIC_MONTH || (m == MIN_LIC_MONTH && d < MIN_LIC_DAY))));
 
+		if (noLicense)
+		{
+			MessageDlg("Отсутствует лицензия на использование программного продукта",
+				mtError, TMsgDlgButtons() << mbOK, 0);
+			exit(0);
+		}
 
 
 		Application->CreateForm(__classid(TDataModule1), &DataModule1);
